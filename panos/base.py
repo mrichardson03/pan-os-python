@@ -3420,7 +3420,10 @@ class PanDevice(PanObject):
         # Create a PAN-OS updater subsystem
         self.software = updater.SoftwareUpdater(self)
         # Create a content updater subsystem
-        self.content = updater.ContentUpdater(self)
+        self.content = updater.DynamicUpdater(self, update_type="content")
+
+        self.antivirus = updater.DynamicUpdater(self, update_type="anti-virus")
+        self.wildfire = updater.DynamicUpdater(self, update_type="wildfire")
 
         # State variables
         self.version = None
