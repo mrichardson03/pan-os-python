@@ -640,7 +640,7 @@ class WildfireAnalysisRule(VersionedPanObject):
         )
         params.append(
             VersionedParamPath(
-                "file-type", path="file-type", default=["any"], vartype="member"
+                "file_type", path="file-type", default=["any"], vartype="member"
             )
         )
         params.append(
