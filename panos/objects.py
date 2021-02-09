@@ -592,6 +592,77 @@ class ApplicationContainer(VersionedPanObject):
         self._params = tuple(params)
 
 
+class WildfireAnalysisProfile(VersionedPanObject):
+    """Wildfire Analysis Profile object
+
+    Args:
+        name (str): Profile name
+        description (str): Profile description
+    """
+
+    ROOT = Root.VSYS
+    SUFFIX = ENTRY
+
+    CHILDTYPES = ("objects.WildfireAnalysisRule",)
+
+    def _setup(self):
+        self._xpaths.add_profile(value="/profiles/wildfire-analysis")
+
+        params = []
+
+        params.append(VersionedParamPath("description", path="description"))
+
+        self._params = tuple(params)
+
+
+class WildfireAnalysisRule(VersionedPanObject):
+    """Wildfire Analysis Rule object
+
+    Args:
+        name (str): Rule name
+        application (list): Applications to inspect
+        file-type (list): File types to inspect
+        direction (str): Traffic direction to match
+    """
+
+    ROOT = Root.VSYS
+    SUFFIX = ENTRY
+
+    def _setup(self):
+        self._xpaths.add_profile(value="/rules")
+
+        params = []
+
+        params.append(
+            VersionedParamPath(
+                "application", path="application", default=["any"], vartype="member"
+            )
+        )
+        params.append(
+            VersionedParamPath(
+                "file-type", path="file-type", default=["any"], vartype="member"
+            )
+        )
+        params.append(
+            VersionedParamPath(
+                "direction",
+                path="direction",
+                default="both",
+                values=["upload", "download", "both"],
+            )
+        )
+        params.append(
+            VersionedParamPath(
+                "analysis",
+                path="analysis",
+                default="public-cloud",
+                values=["public-cloud", "private-cloud"],
+            )
+        )
+
+        self._params = tuple(params)
+
+
 class SecurityProfileGroup(VersionedPanObject):
     """Security Profile Group object
 
